@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Electric Cars, Solar & Clean Energy | Tesla India</title>
+  <link rel="icon" href="https://www.tesla.com/themes/custom/tesla_frontend/assets/favicons/favicon.ico" type="image/x-icon" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --tesla-red: #e82127;
+      --tesla-black: #171a20;
+      --tesla-white: #ffffff;
+      --tesla-gray: #393c41;
+      --tesla-lightgray: #f4f4f4;
+      --nav-height: 56px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Gotham SSm A', 'Gotham SSm B', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #000;
+      color: var(--tesla-black);
+      overflow-x: hidden;
+    }
+
+    /* ======== NAVIGATION ======== */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 9999;
+      height: var(--nav-height);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      transition: background 0.3s, backdrop-filter 0.3s;
+    }
+
+    .nav.scrolled {
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    /* 🔥 ONLY THIS PART CHANGED - TESLA NAME NOW 100% CLEAR & EXACT (left side top) */
+    .nav-logo {
+      font-family: 'Gotham SSm A', 'Gotham SSm B', sans-serif;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -3px;
+      color: inherit;
+      text-decoration: none;
+      line-height: 1;
+    }
+
+    .nav.dark-mode .nav-logo {
+      color: #fff;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: inherit;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 8px 14px;
+      border-radius: 20px;
+      transition: background 0.2s, color 0.2s;
+      white-space: nowrap;
+    }
+
+    .nav-links a:hover { background: rgba(0,0,0,0.08); }
+
+    .nav.dark-mode .nav-links a { color: #fff; }
+    .nav.dark-mode .nav-links a:hover { background: rgba(255,255,255,0.15); }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .nav-right a {
+      text-decoration: none;
+      color: inherit;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 8px 14px;
+      border-radius: 20px;
+      transition: background 0.2s, color 0.2s;
+      white-space: nowrap;
+    }
+
+    .nav-right a:hover { background: rgba(0,0,0,0.08); }
+    .nav.dark-mode .nav-right a { color: #fff; }
+    .nav.dark-mode .nav-right a:hover { background: rgba(255,255,255,0.15); }
+
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 8px;
+      background: none;
+      border: none;
+    }
+
+    .nav-hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--tesla-black);
+      border-radius: 2px;
+      transition: background 0.3s;
+    }
+
+    .nav.dark-mode .nav-hamburger span { background: #fff; }
+
+    /* ======== MOBILE MENU ======== */
+    .mobile-menu {
+      position: fixed;
+      top: 0; right: -100%;
+      width: min(440px, 100%);
+      height: 100vh;
+      background: #fff;
+      z-index: 10000;
+      transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      overflow-y: auto;
+      padding: 60px 40px 40px;
+      box-shadow: -10px 0 40px rgba(0,0,0,0.15);
+    }
+
+    .mobile-menu.open { right: 0; }
+
+    .mobile-menu-close {
+      position: absolute;
+      top: 20px; right: 20px;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--tesla-black);
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+
+    .mobile-menu-close:hover { background: rgba(0,0,0,0.08); }
+
+    .mobile-menu-items { list-style: none; }
+
+    .mobile-menu-items > li {
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+
+    .mobile-menu-items > li > a,
+    .mobile-menu-items > li > button {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      text-decoration: none;
+      color: var(--tesla-black);
+      font-size: 16px;
+      font-weight: 500;
+      padding: 16px 0;
+      width: 100%;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .mobile-submenu {
+      list-style: none;
+      padding-bottom: 10px;
+      display: none;
+    }
+
+    .mobile-submenu.open { display: block; }
+
+    .mobile-submenu li a {
+      display: block;
+      text-decoration: none;
+      color: var(--tesla-gray);
+      font-size: 14px;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+
+    .mobile-submenu li a:hover { background: var(--tesla-lightgray); }
+
+    .menu-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 9998;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s;
+    }
+
+    .menu-overlay.open { opacity: 1; pointer-events: all; }
+
+    /* ======== HERO SECTIONS ======== */
+    .section-hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      min-height: 600px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      transition: transform 0.1s ease-out;
+    }
+
+    .hero-content-top {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding-top: 100px;
+    }
+
+    .hero-content-bottom {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding-bottom: 56px;
+      width: 100%;
+    }
+
+    .hero-model-name {
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 600;
+      letter-spacing: -0.5px;
+      color: var(--tesla-black);
+      line-height: 1.1;
+    }
+
+    .hero-model-name.white-text { color: #fff; }
+
+    .hero-tagline {
+      font-size: clamp(13px, 1.8vw, 16px);
+      color: var(--tesla-black);
+      margin-top: 8px;
+      font-weight: 400;
+    }
+
+    .hero-tagline.white-text { color: #fff; }
+
+    .hero-starting-at {
+      font-size: 12px;
+      color: var(--tesla-gray);
+      margin-top: 4px;
+    }
+
+    .hero-starting-at.white-text { color: rgba(255,255,255,0.8); }
+
+    .hero-starting-at a {
+      color: inherit;
+      text-decoration: underline;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .btn-primary {
+      background: rgba(23,26,32,0.8);
+      color: #fff;
+      border: none;
+      padding: 13px 32px;
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      letter-spacing: 0.3px;
+      transition: background 0.2s, transform 0.2s;
+      white-space: nowrap;
+      backdrop-filter: blur(4px);
+    }
+
+    .btn-primary:hover {
+      background: rgba(23,26,32,0.95);
+      transform: scale(1.01);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.65);
+      color: var(--tesla-black);
+      border: none;
+      padding: 13px 32px;
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      letter-spacing: 0.3px;
+      transition: background 0.2s, transform 0.2s;
+      white-space: nowrap;
+      backdrop-filter: blur(4px);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.85);
+      transform: scale(1.01);
+    }
+
+    .btn-white-outline {
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.6);
+      padding: 13px 32px;
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.2s, transform 0.2s;
+      white-space: nowrap;
+      backdrop-filter: blur(4px);
+    }
+
+    .btn-white-outline:hover { background: rgba(255,255,255,0.25); transform: scale(1.01); }
+
+    /* scroll indicator */
+    .scroll-hint {
+      position: absolute;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      opacity: 0.7;
+      animation: bounce 2s infinite;
+    }
+
+    .scroll-hint span {
+      display: block;
+      width: 20px;
+      height: 20px;
+      border-right: 2px solid #333;
+      border-bottom: 2px solid #333;
+      transform: rotate(45deg);
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ======== INDIVIDUAL MODEL BACKGROUNDS ======== */
+
+    /* Model Y - light blue sky */
+    #section-modely .hero-bg {
+      background-image: url('https://digitalassets.tesla.com/tesla-contents/image/upload/h_900,w_1600,c_fit,f_auto,q_auto:best/Homepage-Model-Y-Desktop-Global');
+      background-color: #d8e9f5;
+    }
+
+    /* Model 3 - white */
+    #section-model3 .hero-bg {
+      background-image: url('https://www.google.com/imgres?q=tesla%20model%203%20images&imgurl=https%3A%2F%2Fhips.hearstapps.com%2Fhmg-prod%2Fimages%2F2023-tesla-model-3-101-1671468297.jpeg%3Fcrop%3D0.575xw%3A0.575xh%3B0.324xw%2C0.214xh%26resize%3D2048%3A*&imgrefurl=https%3A%2F%2Fwww.caranddriver.com%2Ftesla%2Fmodel-3-2023&docid=-Tj5ZQUq04jX_M&tbnid=dViMXeJml8aNpM&vet=12ahUKEwiquPTixfSTAxWBzjgGHa5EOCcQnPAOegQIHRAB..i&w=1472&h=828&hcb=2&ved=2ahUKEwiquPTixfSTAxWBzjgGHa5EOCcQnPAOegQIHRAB');
+      background-color: #f0f0f0;
+    }
+
+    /* Model X - dark evening */
+    #section-modelx .hero-bg {
+      background-image: url('https://digitalassets.tesla.com/tesla-contents/image/upload/h_900,w_1600,c_fit,f_auto,q_auto:best/Homepage-Model-X-Desktop-Global');
+      background-color: #1a1a2e;
+    }
+
+    /* Model S - dark highway */
+    #section-models .hero-bg {
+      background-image: url('https://digitalassets.tesla.com/tesla-contents/image/upload/h_900,w_1600,c_fit,f_auto,q_auto:best/Homepage-Model-S-Desktop-Global');
+      background-color: #0d0d0d;
+    }
+
+    /* Cybertruck - dark */
+    #section-cybertruck .hero-bg {
+      background-image: url('https://digitalassets.tesla.com/tesla-contents/image/upload/h_900,w_1600,c_fit,f_auto,q_auto:best/Homepage-Cybertruck-Desktop-Global');
+      background-color: #1a1a1a;
+    }
+
+    /* Solar Roof */
+    #section-solarroof .hero-bg {
+      background-image: url('https://digitalassets.tesla.com/tesla-contents/image/upload/h_900,w_1600,c_fit,f_auto,q_auto:best/Homepage-Solar-Roof-Desktop-NA');
+      background-color: #1c2c3c;
+    }
+
+    /* Solar Panels */
+    #section-solarpanels .hero-bg {
+      background-image: url('https://digitalassets.tesla.com/tesla-contents/image/upload/h_900,w_1600,c_fit,f_auto,q_auto:best/Homepage-Solar-Panel-Desktop-NA');
+      background-color: #2a3a1c;
+    }
+
+    /* Powerwall */
+    #section-powerwall .hero-bg {
+      background-image: url('https://digitalassets.tesla.com/tesla-contents/image/upload/h_900,w_1600,c_fit,f_auto,q_auto:best/Homepage-Powerwall-Desktop-NA');
+      background-color: #101010;
+    }
+
+    /* Accessories */
+    #section-accessories .hero-bg {
+      background-image: url('https://digitalassets.tesla.com/tesla-contents/image/upload/h_900,w_1600,c_fit,f_auto,q_auto:best/Homepage-Accessories-Desktop-NA');
+      background-color: #f2f0eb;
+    }
+
+    /* ======== FALLBACK GRADIENT BACKGROUNDS ======== */
+    #section-modely .hero-bg { background: linear-gradient(180deg, #c8dff0 0%, #e8f4fd 40%, #f5f9fc 100%); }
+    #section-model3 .hero-bg { background: linear-gradient(180deg, #e8e8e8 0%, #f5f5f5 50%, #ebebeb 100%); }
+    #section-modelx .hero-bg { background: linear-gradient(180deg, #0a0a1a 0%, #1a1a3a 50%, #2a2a4a 100%); }
+    #section-models .hero-bg { background: linear-gradient(180deg, #050505 0%, #111 50%, #1a1a1a 100%); }
+    #section-cybertruck .hero-bg { background: linear-gradient(180deg, #0a0a0a 0%, #151515 50%, #1f1f1f 100%); }
+    #section-solarroof .hero-bg { background: linear-gradient(180deg, #0d1b2a 0%, #1a3a5c 50%, #2a5a8c 100%); }
+    #section-solarpanels .hero-bg { background: linear-gradient(180deg, #1a2a10 0%, #2a4a20 50%, #3a6a30 100%); }
+    #section-powerwall .hero-bg { background: linear-gradient(180deg, #080808 0%, #121212 50%, #1c1c1c 100%); }
+    #section-accessories .hero-bg { background: linear-gradient(180deg, #ece8e0 0%, #f2ede5 50%, #f8f4ee 100%); }
+
+    /* Override to use images when available (will load on top of gradient) */
+    #section-modely .hero-bg,
+    #section-model3 .hero-bg,
+    #section-modelx .hero-bg,
+    #section-models .hero-bg,
+    #section-cybertruck .hero-bg,
+    #section-solarroof .hero-bg,
+    #section-solarpanels .hero-bg,
+    #section-powerwall .hero-bg,
+    #section-accessories .hero-bg {
+      background-size: cover;
+      background-position: center;
+    }
+
+    /* ======== FOOTER ======== */
+    .footer {
+      background: #fff;
+      padding: 48px 80px;
+      border-top: 1px solid rgba(0,0,0,0.08);
+    }
+
+    .footer-top {
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 32px;
+    }
+
+    .footer-link {
+      text-decoration: none;
+      color: var(--tesla-gray);
+      font-size: 12px;
+      transition: color 0.2s;
+      white-space: nowrap;
+    }
+
+    .footer-link:hover { color: var(--tesla-black); }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 11px;
+      color: #aaa;
+    }
+
+    .footer-bottom-links {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .footer-bottom-links a {
+      color: #aaa;
+      text-decoration: none;
+    }
+
+    .footer-bottom-links a:hover { color: #555; text-decoration: underline; }
+
+    .country-selector {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--tesla-gray);
+      font-size: 12px;
+      cursor: pointer;
+      padding: 6px 12px;
+      border: 1px solid rgba(0,0,0,0.15);
+      border-radius: 4px;
+      background: none;
+      transition: border-color 0.2s;
+    }
+
+    .country-selector:hover { border-color: rgba(0,0,0,0.4); }
+
+    /* ======== RESPONSIVE ======== */
+    @media (max-width: 1024px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .nav-right .nav-r-items { display: none; }
+    }
+
+    @media (max-width: 768px) {
+      .footer { padding: 40px 24px; }
+      .footer-top { gap: 20px; }
+      .hero-content-top { padding-top: 80px; }
+      .hero-content-bottom { padding-bottom: 40px; }
+      .section-hero { height: 100svh; }
+    }
+
+    @media (max-width: 480px) {
+      .btn-primary, .btn-secondary, .btn-white-outline { padding: 11px 22px; font-size: 13px; }
+      .hero-btns { gap: 8px; }
+    }
+
+    /* ======== ANNOUNCEMENT BANNER ======== */
+    .announcement-bar {
+      position: fixed;
+      top: var(--nav-height);
+      left: 0; right: 0;
+      z-index: 9000;
+      background: var(--tesla-black);
+      color: #fff;
+      text-align: center;
+      padding: 12px 20px;
+      font-size: 13px;
+      display: none;
+    }
+
+    .announcement-bar a { color: #fff; font-weight: 600; }
+
+    /* ======== STATS ROW (below hero) ======== */
+    .stats-row {
+      display: flex;
+      justify-content: center;
+      gap: 60px;
+      padding: 40px 20px;
+      background: #fff;
+      flex-wrap: wrap;
+    }
+
+    .stat-item { text-align: center; }
+
+    .stat-value {
+      font-size: 32px;
+      font-weight: 600;
+      color: var(--tesla-black);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: var(--tesla-gray);
+      margin-top: 4px;
+    }
+
+    /* ======== SPEC STRIP ======== */
+    .spec-strip {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      background: #fff;
+      border-top: 1px solid rgba(0,0,0,0.1);
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+      flex-wrap: wrap;
+    }
+
+    .spec-item {
+      text-align: center;
+      padding: 24px 40px;
+      border-right: 1px solid rgba(0,0,0,0.08);
+      flex: 1;
+      min-width: 120px;
+    }
+
+    .spec-item:last-child { border-right: none; }
+
+    .spec-value {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--tesla-black);
+    }
+
+    .spec-unit {
+      font-size: 12px;
+      color: var(--tesla-gray);
+      margin-top: 2px;
+    }
+
+    .spec-label {
+      font-size: 11px;
+      color: var(--tesla-gray);
+      margin-top: 4px;
+    }
+
+    /* ======== LOADING ANIMATION ======== */
+    .hero-bg {
+      animation: bgFadeIn 0.8s ease;
+    }
+
+    @keyframes bgFadeIn {
+      from { opacity: 0.6; }
+      to { opacity: 1; }
+    }
+
+    /* ======== TESLA LOGO SVG ======== */
+    .tesla-t-logo {
+      width: 36px;
+      height: 44px;
+    }
+
+    /* ======== SECTION TRANSITIONS ======== */
+    .section-hero { transition: none; }
+
+    /* ======== HEADER DROPDOWNS ======== */
+    .dropdown-wrapper {
+      position: relative;
+    }
+
+    .dropdown-wrapper:hover .dropdown-menu { display: flex; }
+
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,0.98);
+      backdrop-filter: blur(20px);
+      border-radius: 12px;
+      padding: 20px;
+      gap: 8px;
+      flex-direction: column;
+      min-width: 200px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+      list-style: none;
+    }
+
+    .dropdown-menu li a {
+      display: block;
+      padding: 10px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      color: var(--tesla-black);
+      font-size: 14px;
+      font-weight: 400;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+
+    .dropdown-menu li a:hover { background: var(--tesla-lightgray); }
+
+    /* ======== CYBER TRUCK SPECIFIC ======== */
+    .badge-new {
+      display: inline-block;
+      background: var(--tesla-red);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      padding: 2px 8px;
+      border-radius: 2px;
+      margin-left: 8px;
+      vertical-align: middle;
+      text-transform: uppercase;
+    }
+
+    /* ======== ORDER STRIP ======== */
+    .order-strip {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 40px;
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: blur(10px);
+      border-radius: 8px;
+      max-width: 500px;
+      margin: 0 auto;
+      font-size: 13px;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .notification-dot {
+      width: 8px; height: 8px;
+      background: var(--tesla-red);
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 6px;
+    }
+
+    /* Subtle noise overlay for depth */
+    .hero-noise {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.02;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    /* Progress bar loading for images */
+    .img-loading {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+      animation: shimmer 2s infinite;
+      z-index: 3;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    /* ======= VIDEO BG STYLE ======== */
+    .video-bg-wrapper {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    .video-bg-wrapper video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* ======== PROMO BAND ======== */
+    .promo-band {
+      background: #1a1a1a;
+      color: #fff;
+      text-align: center;
+      padding: 14px 20px;
+      font-size: 13px;
+    }
+
+    .promo-band a { color: #fff; text-decoration: underline; }
+
+    /* Smooth image load */
+    .lazy-bg { opacity: 0; transition: opacity 0.5s ease; }
+    .lazy-bg.loaded { opacity: 1; }
+  </style>
+</head>
+<body>
+
+  <!-- ======== NAVIGATION ======== -->
+  <nav class="nav dark-mode" id="main-nav">
+    <a href="#" class="nav-logo" aria-label="Tesla">
+      TESLA
+    </a>
+
+    <ul class="nav-links" id="nav-links">
+      <li class="dropdown-wrapper">
+        <a href="#">Vehicles</a>
+        <ul class="dropdown-menu">
+          <li><a href="#section-modely">Model Y</a></li>
+          <li><a href="#section-model3">Model 3</a></li>
+          <li><a href="#section-modelx">Model X</a></li>
+          <li><a href="#section-models">Model S</a></li>
+          <li><a href="#section-cybertruck">Cybertruck</a></li>
+        </ul>
+      </li>
+      <li class="dropdown-wrapper">
+        <a href="#">Energy</a>
+        <ul class="dropdown-menu">
+          <li><a href="#section-solarroof">Solar Roof</a></li>
+          <li><a href="#section-solarpanels">Solar Panels</a></li>
+          <li><a href="#section-powerwall">Powerwall</a></li>
+        </ul>
+      </li>
+      <li class="dropdown-wrapper">
+        <a href="#">Charging</a>
+        <ul class="dropdown-menu">
+          <li><a href="#">Supercharger</a></li>
+          <li><a href="#">Home Charging</a></li>
+          <li><a href="#">Destination Charging</a></li>
+        </ul>
+      </li>
+      <li class="dropdown-wrapper">
+        <a href="#">Discover</a>
+        <ul class="dropdown-menu">
+          <li><a href="#">About Tesla</a></li>
+          <li><a href="#">Newsroom</a></li>
+          <li><a href="#">Events</a></li>
+          <li><a href="#">Blog</a></li>
+        </ul>
+      </li>
+      <li><a href="#">Shop</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <div class="nav-r-items" style="display:flex;gap:4px;">
+        <a href="#">Find Us</a>
+        <a href="#">Account</a>
+      </div>
+      <button class="nav-hamburger" id="menu-toggle" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ======== MOBILE MENU ======== -->
+  <div class="menu-overlay" id="menu-overlay"></div>
+  <div class="mobile-menu" id="mobile-menu">
+    <button class="mobile-menu-close" id="menu-close" aria-label="Close menu">✕</button>
+    <ul class="mobile-menu-items">
+      <li>
+        <button onclick="toggleSub('sub-vehicles')">Vehicles <span>›</span></button>
+        <ul class="mobile-submenu" id="sub-vehicles">
+          <li><a href="#section-modely" onclick="closeMenu()">Model Y</a></li>
+          <li><a href="#section-model3" onclick="closeMenu()">Model 3</a></li>
+          <li><a href="#section-modelx" onclick="closeMenu()">Model X</a></li>
+          <li><a href="#section-models" onclick="closeMenu()">Model S</a></li>
+          <li><a href="#section-cybertruck" onclick="closeMenu()">Cybertruck</a></li>
+        </ul>
+      </li>
+      <li>
+        <button onclick="toggleSub('sub-energy')">Energy <span>›</span></button>
+        <ul class="mobile-submenu" id="sub-energy">
+          <li><a href="#section-solarroof" onclick="closeMenu()">Solar Roof</a></li>
+          <li><a href="#section-solarpanels" onclick="closeMenu()">Solar Panels</a></li>
+          <li><a href="#section-powerwall" onclick="closeMenu()">Powerwall</a></li>
+        </ul>
+      </li>
+      <li>
+        <button onclick="toggleSub('sub-charging')">Charging <span>›</span></button>
+        <ul class="mobile-submenu" id="sub-charging">
+          <li><a href="#" onclick="closeMenu()">Supercharger</a></li>
+          <li><a href="#" onclick="closeMenu()">Home Charging</a></li>
+        </ul>
+      </li>
+      <li>
+        <button onclick="toggleSub('sub-discover')">Discover <span>›</span></button>
+        <ul class="mobile-submenu" id="sub-discover">
+          <li><a href="#" onclick="closeMenu()">About Tesla</a></li>
+          <li><a href="#" onclick="closeMenu()">Newsroom</a></li>
+          <li><a href="#" onclick="closeMenu()">Events</a></li>
+          <li><a href="#" onclick="closeMenu()">Blog</a></li>
+        </ul>
+      </li>
+      <li><a href="#" onclick="closeMenu()">Shop</a></li>
+      <li><a href="#" onclick="closeMenu()">Find Us</a></li>
+      <li><a href="#" onclick="closeMenu()">Account</a></li>
+    </ul>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 1: MODEL Y                                           -->
+  <!-- ============================================================ -->
+  <section class="section-hero" id="section-modely" data-theme="light">
+    <div class="hero-bg lazy-bg" id="bg-modely" style="
+      background-image: url('https://digitalassets.tesla.com/tesla-contents/image/upload/h_900,w_1600,c_fit,f_auto,q_auto:best/Homepage-Model-Y-Desktop-Global');
+      background: linear-gradient(180deg,#bdd8ef 0%,#d8ecf8 40%,#edf6fd 75%,#f7fbfe 100%);
+      background-size: cover; background-position: center;
+    "></div>
+
+    <!-- Actual img tag for Model Y for exact visual -->
+    <img
+      src="https://digitalassets.tesla.com/tesla-contents/image/upload/h_900,w_1600,c_fit,f_auto,q_auto:best/Homepage-Model-Y-Desktop-Global"
+      alt="Model Y"
+      onerror="this.style.display='none'"
+      style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;"
+    />
+
+    <div class="hero-noise"></div>
+
+    <div class="hero-content-top">
+      <h1 class="hero-model-name">Model Y</h1>
+      <p class="hero-tagline">Best Seller</p>
+    </div>
+
+    <div class="hero-content-bottom">
+      <div class="spec-strip" style="border:none;background:transparent;margin-bottom:20px;">
+        <div class="spec-item">
+          <div class="spec-value">533</div>
+          <div class="spec-unit">km</div>
+          <div class="spec-label">Range (ARAI)*</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-value">3.5</div>
+          <div class="spec-unit">sec</div>
+          <div class="spec-label">0-100 km/h</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-value">250</div>
+          <div class="spec-unit">km/h</div>
+          <div class="spec-label">Top Speed</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-value">AWD</div>
+          <div class="spec-unit">&nbsp;</div>
+          <div class="spec-label">Dual Motor</div>
+        </div>
+      </div>
+      <div class="hero-btns">
+        <a href="#" class="btn-primary">Order Now</a>
+        <a href="#" class="btn-secondary">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 2: MODEL 3                                           -->
+  <!-- ============================================================ -->
+  <section class="section-hero" id="section-model3" data-theme="light">
+    <img
+      src="https://www.shop4tesla.com/cdn/shop/articles/tesla-model-3-uber-230000-km-und-tausende-euro-gespart-956682.jpg?format=webp&pad_color=ffffff&v=1728598029&width=1280"
+      alt="Model 3"
+      onerror="this.style.display='none'"
+      style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;"
+    />
+    <div class="hero-bg" style="
+      background: linear-gradient(180deg,#e4e4e4 0%,#f0f0f0 40%,#f8f8f8 80%,#fff 100%);
+      background-size: cover; background-position: center; z-index:-1;
+    "></div>
+    <div class="hero-noise"></div>
+
+    <div class="hero-content-top">
+      <h1 class="hero-model-name">Model 3</h1>
+      <p class="hero-tagline">Now With All-Wheel Drive</p>
+    </div>
+
+    <div class="hero-content-bottom">
+      <div class="spec-strip" style="border:none;background:transparent;margin-bottom:20px;">
+        <div class="spec-item">
+          <div class="spec-value">629</div>
+          <div class="spec-unit">km</div>
+          <div class="spec-label">Range (WLTP)*</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-value">4.4</div>
+          <div class="spec-unit">sec</div>
+          <div class="spec-label">0-100 km/h</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-value">225</div>
+          <div class="spec-unit">km/h</div>
+          <div class="spec-label">Top Speed</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-value">RWD</div>
+          <div class="spec-unit">&nbsp;</div>
+          <div class="spec-label">Rear-Wheel Drive</div>
+        </div>
+      </div>
+      <div class="hero-btns">
+        <a href="#" class="btn-primary">Order Now</a>
+        <a href="#" class="btn-secondary">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 3: MODEL X                                           -->
+  <!-- ============================================================ -->
+  <section class="section-hero" id="section-modelx" data-theme="dark">
+    <img
+      src="https://www.shop4tesla.com/cdn/shop/articles/tesla-model-x-preissturz-um-20-seit-2023-lohnendes-angebot-158417.jpg?format=webp&pad_color=ffffff&v=1723709154&width=1280"
+      alt="Model X"
+      onerror="this.style.display='none'"
+      style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;"
+    />
+    <div class="hero-bg" style="
+      background: linear-gradient(180deg,#05050f 0%,#101030 50%,#1a1a40 100%);
+      background-size: cover; background-position: center; z-index:-1;
+    "></div>
+    <div class="hero-noise"></div>
+
+    <div class="hero-content-top">
+      <h1 class="hero-model-name white-text">Model X</h1>
+      <p class="hero-tagline white-text">Maximum Range. Maximum Performance.</p>
+    </div>
+
+    <div class="hero-content-bottom">
+      <div class="spec-strip" style="border:none;background:transparent;margin-bottom:20px;">
+        <div class="spec-item">
+          <div class="spec-value" style="color:#fff">560</div>
+          <div class="spec-unit" style="color:rgba(255,255,255,0.7)">km</div>
+          <div class="spec-label" style="color:rgba(255,255,255,0.6)">Range (WLTP)*</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-value" style="color:#fff">3.9</div>
+          <div class="spec-unit" style="color:rgba(255,255,255,0.7)">sec</div>
+          <div class="spec-label" style="color:rgba(255,255,255,0.6)">0-100 km/h</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-value" style="color:#fff">250</div>
+          <div class="spec-unit" style="color:rgba(255,255,255,0.7)">km/h</div>
+          <div class="spec-label" style="color:rgba(255,255,255,0.6)">Top Speed</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-value" style="color:#fff">6+2</div>
+          <div class="spec-unit" style="color:rgba(255,255,255,0.7)">&nbsp;</div>
+          <div class="spec-label" style="color:rgba(255,255,255,0.6)">Seating</div>
+        </div>
+      </div>
+      <div class="hero-btns">
+        <a href="#" class="btn-primary">Order Now</a>
+        <a href="#" class="btn-white-outline">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 4: MODEL S                                           -->
+  <!-- ============================================================ -->
+  <section class="section-hero" id="section-models" data-theme="dark">
+    <img
+      src="https://hips.hearstapps.com/hmg-prod/images/2026-tesla-model-s-plaid-110-68f660fbe3cdf.jpg?crop=1xw:1xh;center,top"
+      alt="Model S"
+      onerror="this.style.display='none'"
+      style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;"
+    />
+    <div class="hero-bg" style="
+      background: linear-gradient(180deg,#050505 0%,#0f0f0f 50%,#181818 100%);
+      background-size: cover; background-position: center; z-index:-1;
+    "></div>
+    <div class="hero-noise"></div>
+
+    <div class="hero-content-top">
+      <h1 class="hero-model-name white-text">Model S</h1>
+      <p class="hero-tagline white-text">Quickest Acceleration. Longest Range.</p>
+    </div>
+
+    <div class="hero-content-bottom">
+      <div class="spec-strip" style="border:none;background:transparent;margin-bottom:20px;">
+        <div class="spec-item">
+          <div class="spec-value" style="color:#fff">637</div>
+          <div class="spec-unit" style="color:rgba(255,255,255,0.7)">km</div>
+          <div class="spec-label" style="color:rgba(255,255,255,0.6)">Range (WLTP)*</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-value" style="color:#fff">2.1</div>
+          <div class="spec-unit" style="color:rgba(255,255,255,0.7)">sec</div>
+          <div class="spec-label" style="color:rgba(255,255,255,0.6)">0-100 km/h</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-value" style="color:#fff">322</div>
+          <div class="spec-unit" style="color:rgba(255,255,255,0.7)">km/h</div>
+          <div class="spec-label" style="color:rgba(255,255,255,0.6)">Top Speed</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-value" style="color:#fff">AWD</div>
+          <div class="spec-unit" style="color:rgba(255,255,255,0.7)">&nbsp;</div>
+          <div class="spec-label" style="color:rgba(255,255,255,0.6)">Tri Motor</div>
+        </div>
+      </div>
+      <div class="hero-btns">
+        <a href="#" class="btn-primary">Order Now</a>
+        <a href="#" class="btn-white-outline">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 5: CYBERTRUCK                                        -->
+  <!-- ============================================================ -->
+  <section class="section-hero" id="section-cybertruck" data-theme="dark">
+    <img
+      src="https://hips.hearstapps.com/hmg-prod/images/2024-tesla-cybertruck-102-65e894591b71d.jpg?crop=1xw:1xh;center,top"
+      alt="Cybertruck"
+      onerror="this.style.display='none'"
+      style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;"
+    />
+    <div class="hero-bg" style="
+      background: linear-gradient(180deg,#090909 0%,#141414 50%,#1e1e1e 100%);
+      background-size: cover; background-position: center; z-index:-1;
+    "></div>
+    <div class="hero-noise"></div>
+
+    <div class="hero-content-top">
+      <h1 class="hero-model-name white-text">
+        Cybertruck
+        <span class="badge-new">New</span>
+      </h1>
+      <p class="hero-tagline white-text">Built For Anything. Designed For Everything.</p>
+    </div>
+
+    <div class="hero-content-bottom">
+      <div class="spec-strip" style="border:none;background:transparent;margin-bottom:20px;">
+        <div class="spec-item">
+          <div class="spec-value" style="color:#fff">547</div>
+          <div class="spec-unit" style="color:rgba(255,255,255,0.7)">km</div>
+          <div class="spec-label" style="color:rgba(255,255,255,0.6)">Range*</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-value" style="color:#fff">2.7</div>
+          <div class="spec-unit" style="color:rgba(255,255,255,0.7)">sec</div>
+          <div class="spec-label" style="color:rgba(255,255,255,0.6)">0-100 km/h</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-value" style="color:#fff">209</div>
+          <div class="spec-unit" style="color:rgba(255,255,255,0.7)">km/h</div>
+          <div class="spec-label" style="color:rgba(255,255,255,0.6)">Top Speed</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-value" style="color:#fff">3</div>
+          <div class="spec-unit" style="color:rgba(255,255,255,0.7)">Motor</div>
+          <div class="spec-label" style="color:rgba(255,255,255,0.6)">AWD</div>
+        </div>
+      </div>
+      <div class="hero-btns">
+        <a href="#" class="btn-primary">Order Now</a>
+        <a href="#" class="btn-white-outline">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 6: SOLAR ROOF                                        -->
+  <!-- ============================================================ -->
+  <section class="section-hero" id="section-solarroof" data-theme="dark">
+    <img
+      src="https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/19319980/Screen_Shot_2019_10_25_at_5.31.31_PM.png?quality=90&strip=all&crop=0%2C0.85243974132863%2C100%2C98.295120517343&w=1080"
+      alt="Solar Roof"
+      onerror="this.style.display='none'"
+      style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;"
+    />
+    <div class="hero-bg" style="
+      background: linear-gradient(180deg,#0d1b2a 0%,#142a40 40%,#1c3d5c 80%,#254d72 100%);
+      z-index:-1;
+    "></div>
+
+    <div class="hero-content-top">
+      <h1 class="hero-model-name white-text">Solar Roof</h1>
+      <p class="hero-tagline white-text">Power Your Home With Beautiful Solar</p>
+    </div>
+
+    <div class="hero-content-bottom">
+      <div class="hero-btns">
+        <a href="#" class="btn-primary">Order Now</a>
+        <a href="#" class="btn-white-outline">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 7: SOLAR PANELS                                      -->
+  <!-- ============================================================ -->
+  <section class="section-hero" id="section-solarpanels" data-theme="dark">
+    <img
+      src="https://www.residentialsolarpanels.org/wp-content/uploads/2025/04/tesla-solar-home-installation.jpg"
+      alt="Solar Panels"
+      onerror="this.style.display='none'"
+      style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;"
+    />
+    <div class="hero-bg" style="
+      background: linear-gradient(180deg,#1a2a0e 0%,#243818 40%,#2e4820 80%,#3a5828 100%);
+      z-index:-1;
+    "></div>
+
+    <div class="hero-content-top">
+      <h1 class="hero-model-name white-text">Solar Panels</h1>
+      <p class="hero-tagline white-text">Produce Clean Energy From Your Roof</p>
+    </div>
+
+    <div class="hero-content-bottom">
+      <div class="hero-btns">
+        <a href="#" class="btn-primary">Order Now</a>
+        <a href="#" class="btn-white-outline">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 8: POWERWALL                                         -->
+  <!-- ============================================================ -->
+  <section class="section-hero" id="section-powerwall" data-theme="dark">
+    <img
+      src="https://peninsula-solar.com/wp-content/uploads/2023/05/tesla-powerwall-design-1536x864.jpeg"
+      alt="Powerwall"
+      onerror="this.style.display='none'"
+      style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;"
+    />
+    <div class="hero-bg" style="
+      background: linear-gradient(180deg,#060606 0%,#111 50%,#1a1a1a 100%);
+      z-index:-1;
+    "></div>
+
+    <div class="hero-content-top">
+      <h1 class="hero-model-name white-text">Powerwall</h1>
+      <p class="hero-tagline white-text">24/7 Energy Independence</p>
+    </div>
+
+    <div class="hero-content-bottom">
+      <div class="hero-btns">
+        <a href="#" class="btn-primary">Order Now</a>
+        <a href="#" class="btn-white-outline">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 9: ACCESSORIES                                       -->
+  <!-- ============================================================ -->
+  <section class="section-hero" id="section-accessories" data-theme="light">
+    <img
+      src="https://digitalassets.tesla.com/tesla-contents/image/upload/h_900,w_1600,c_fit,f_auto,q_auto:best/Homepage-Accessories-Desktop-NA"
+      alt="Accessories"
+      onerror="this.style.display='none'"
+      style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;"
+    />
+    <div class="hero-bg" style="
+      background: linear-gradient(180deg,#ece8e0 0%,#f2ede5 40%,#f8f4ee 80%,#fdfcf9 100%);
+      z-index:-1;
+    "></div>
+
+    <div class="hero-content-top">
+      <h1 class="hero-model-name">Accessories</h1>
+      <p class="hero-tagline">Complete Your Tesla</p>
+    </div>
+
+    <div class="hero-content-bottom">
+      <div class="hero-btns">
+        <a href="#" class="btn-primary">Shop Now</a>
+        <a href="#" class="btn-secondary">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== FOOTER ======== -->
+  <footer class="footer">
+    <nav class="footer-top">
+      <a href="#" class="footer-link">Tesla  &copy; 2025</a>
+      <a href="#" class="footer-link">Privacy &amp; Legal</a>
+      <a href="#" class="footer-link">Vehicle Recalls</a>
+      <a href="#" class="footer-link">Contact</a>
+      <a href="#" class="footer-link">News</a>
+      <a href="#" class="footer-link">Engage</a>
+      <a href="#" class="footer-link">Locations</a>
+      <a href="#" class="footer-link">Careers</a>
+      <a href="#" class="footer-link">Forums</a>
+    </nav>
+
+    <div class="footer-bottom">
+      <div class="footer-bottom-links">
+        <a href="#">DESIGNED BY SNEHALATHA</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+         
+        <a href="#">Supplier Code of Conduct</a>
+        <a href="#">Your Privacy Choices</a>
+      </div>
+      <button class="country-selector">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="2" y1="12" x2="22" y2="12"/>
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+        </svg>
+        India
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </button>
+
+      <!-- 🔥 SOCIAL MEDIA ICONS (nuvvu contact avvalante click chey - direct redirect) -->
+      <div style="display:flex; gap:20px; align-items:center; margin-left:20px;">
+        <a href="https://www.linkedin.com/in/sneha-arakkonam" target="_blank" title="LinkedIn - Snehalatha Arakkonam" style="color:#aaa; transition:color 0.2s ease;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.67.3-2.3.9l-.07.07v-1.4h-2.8v9.1h2.8v-5.1c0-.6.5-1.1 1.1-1.1s1.1.5 1.1 1.1v5.1h2.8zM6.5 8.5c.8 0 1.5-.7 1.5-1.5S7.3 5.5 6.5 5.5 5 6.2 5 7s.7 1.5 1.5 1.5zM5 19.5h2.8v-9.1H5v9.1z"/>
+          </svg>
+        </a>
+        <a href="https://github.com/snehalathaArakkonam" target="_blank" title="GitHub - snehalathaArakkonam" style="color:#aaa; transition:color 0.2s ease;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.91-1.296 2.75-1.027 2.75-1.027.544 1.378.202 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ======== JAVASCRIPT ======== -->
+  <script>
+    // ======= NAV SCROLL BEHAVIOR =======
+    const nav = document.getElementById('main-nav');
+    const sections = document.querySelectorAll('.section-hero');
+
+    function updateNav() {
+      const scrollY = window.scrollY;
+
+      // Determine current visible section
+      let currentSection = null;
+      sections.forEach(sec => {
+        const rect = sec.getBoundingClientRect();
+        if (rect.top <= 60 && rect.bottom > 60) {
+          currentSection = sec;
+        }
+      });
+
+      const isDark = currentSection && currentSection.dataset.theme === 'dark';
+
+      if (scrollY < 10) {
+        nav.classList.remove('scrolled');
+      } else {
+        nav.classList.add('scrolled');
+      }
+
+      if (isDark && scrollY < 10) {
+        nav.classList.add('dark-mode');
+      } else if (isDark && !nav.classList.contains('scrolled')) {
+        nav.classList.add('dark-mode');
+      } else if (!isDark) {
+        nav.classList.remove('dark-mode');
+      } else {
+        nav.classList.remove('dark-mode');
+      }
+    }
+
+    window.addEventListener('scroll', updateNav, { passive: true });
+    updateNav();
+
+    // ======= MOBILE MENU =======
+    const menuToggle = document.getElementById('menu-toggle');
+    const menuClose = document.getElementById('menu-close');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuOverlay = document.getElementById('menu-overlay');
+
+    function openMenu() {
+      mobileMenu.classList.add('open');
+      menuOverlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+      mobileMenu.classList.remove('open');
+      menuOverlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    menuToggle.addEventListener('click', openMenu);
+    menuClose.addEventListener('click', closeMenu);
+    menuOverlay.addEventListener('click', closeMenu);
+
+    function toggleSub(id) {
+      const sub = document.getElementById(id);
+      sub.classList.toggle('open');
+    }
+
+    // ======= SMOOTH ANCHOR SCROLL =======
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // ======= INTERSECTION OBSERVER FOR NAV THEME =======
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const theme = entry.target.dataset.theme;
+          if (theme === 'dark') {
+            nav.classList.add('dark-mode');
+          } else {
+            nav.classList.remove('dark-mode');
+          }
+        }
+      });
+    }, {
+      threshold: 0.5,
+      rootMargin: `-${parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-height'))}px 0px 0px 0px`
+    });
+
+    sections.forEach(sec => observer.observe(sec));
+
+    // ======= PARALLAX SUBTLE =======
+    function applyParallax() {
+      const scrollY = window.scrollY;
+      sections.forEach(sec => {
+        const rect = sec.getBoundingClientRect();
+        if (rect.bottom > 0 && rect.top < window.innerHeight) {
+          const imgs = sec.querySelectorAll('img');
+          const offset = (scrollY - sec.offsetTop) * 0.15;
+          imgs.forEach(img => {
+            if (img.src && img.style.display !== 'none') {
+              img.style.transform = `translateY(${offset}px) scale(1.08)`;
+            }
+          });
+        }
+      });
+    }
+
+    window.addEventListener('scroll', applyParallax, { passive: true });
+
+    // ======= LAZY LOAD FALLBACK =======
+    // Attempt to load actual images; fallback to gradient already set via inline styles
+    document.querySelectorAll('.section-hero img').forEach(img => {
+      img.addEventListener('load', () => {
+        img.style.opacity = '1';
+      });
+      img.style.opacity = '0';
+      img.style.transition = 'opacity 0.8s ease';
+      if (img.complete) img.style.opacity = '1';
+    });
+
+    // ======= SCROLL REVEAL ANIMATION =======
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.hero-content-top, .hero-content-bottom').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+      revealObserver.observe(el);
+    });
+
+    // Trigger first section immediately
+    document.querySelectorAll('#section-modely .hero-content-top, #section-modely .hero-content-bottom').forEach(el => {
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0)';
+    });
+
+    // ======= TOUCH / MOBILE NAV HIDE =======
+    let lastScrollY = 0;
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      if (y > 100) {
+        nav.style.transform = y > lastScrollY ? 'translateY(-100%)' : 'translateY(0)';
+      } else {
+        nav.style.transform = 'translateY(0)';
+      }
+      lastScrollY = y;
+    }, { passive: true });
+
+    nav.style.transition = 'background 0.3s, backdrop-filter 0.3s, transform 0.3s';
+  </script>
+</body>
+</html>
